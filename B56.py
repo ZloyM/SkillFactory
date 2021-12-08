@@ -1,26 +1,27 @@
-def greet():
-    print("-------------------")
+def start():
+    print("                   ")
     print("  Крестики-нолики  ")
-    print("-------------------")
-    print(" Формат ввода: x y ")
-    print(" x - номер строки  ")
-    print(" y - номер столбца ")
+    print("___________________")
+    print(" Формат ввода: X Y ")
+    print(" X - номер строки  ")
+    print(" Y - номер столбца ")
 
 
-def show():
+def table():
     print()
-    print("    | 0 | 1 | 2 | ")
-    print("  --------------- ")
+    print("   Y| 0 | 1 | 2 | ")
+    print("  X ------------- ")
     for i, row in enumerate(field):
         row_str = f"  {i} | {' | '.join(row)} | "
         print(row_str)
-        print("  --------------- ")
+        print("    ------------- ")
     print()
 
 
-def ask():
+def to_ask():
     while True:
-        cords = input("         Ваш ход: ").split()
+        print("______________")
+        cords = input("  Ваш ход: ").split()
 
         if len(cords) != 2:
             print(" Введите 2 координаты! ")
@@ -29,13 +30,13 @@ def ask():
         x, y = cords
 
         if not (x.isdigit()) or not (y.isdigit()):
-            print(" Введите числа! ")
+            print(" Введите координаты! ")
             continue
 
         x, y = int(x), int(y)
 
         if 0 > x or x > 2 or 0 > y or y > 2:
-            print(" Координаты вне диапазона! ")
+            print(" Данной координаты не существует! ")
             continue
 
         if field[x][y] != " ":
@@ -45,7 +46,7 @@ def ask():
         return x, y
 
 
-def check_win():
+def win():
     win_cord = (((0, 0), (0, 1), (0, 2)), ((1, 0), (1, 1), (1, 2)), ((2, 0), (2, 1), (2, 2)),
                 ((0, 2), (1, 1), (2, 0)), ((0, 0), (1, 1), (2, 2)), ((0, 0), (1, 0), (2, 0)),
                 ((0, 1), (1, 1), (2, 1)), ((0, 2), (1, 2), (2, 2)))
@@ -54,26 +55,30 @@ def check_win():
         for c in cord:
             symbols.append(field[c[0]][c[1]])
         if symbols == ["X", "X", "X"]:
-            print("Выиграл X!!!")
+            print("Победитель X!")
             return True
         if symbols == ["0", "0", "0"]:
-            print("Выиграл 0!!!")
+            print("Победитель 0!")
             return True
     return False
 
 
-greet()
-field = [[" "] * 3 for i in range(3)]
+start()
+field = [
+    [" ", " ", " "],
+    [" ", " ", " "],
+    [" ", " ", " "]
+]
 count = 0
 while True:
     count += 1
-    show()
+    table()
     if count % 2 == 1:
-        print(" Ходит крестик!")
+        print(" Ход крестика!")
     else:
-        print(" Ходит нолик!")
+        print(" Ход нолика!")
 
-    x, y = ask()
+    x, y = to_ask()
 
     if count % 2 == 1:
         field[x][y] = "X"
@@ -84,5 +89,5 @@ while True:
         break
 
     if count == 9:
-        print(" Ничья!")
+        print(" Победила дружба!")
         break
