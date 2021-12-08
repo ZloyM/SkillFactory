@@ -85,7 +85,7 @@ while True:
     else:
         field[x][y] = "0"
 
-    if check_win():
+    if win():
         break
 
     if count == 9:
